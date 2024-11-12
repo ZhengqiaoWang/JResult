@@ -33,11 +33,11 @@ public:
     {
     }
     JResult<SuccessRetType, FailureRetType>(const JResult<SuccessRetType, FailureRetType> &other)
-        : m_is_success(other.m_is_success), m_success_ret(other.m_success_ret), m_fail_ret(other.m_failed_ret)
+        : m_is_success(other.m_is_success), m_success_ret(other.m_success_ret), m_fail_ret(other.m_fail_ret)
     {
     }
     JResult<SuccessRetType, FailureRetType>(JResult<SuccessRetType, FailureRetType> &&other)
-        : m_is_success(other.m_is_success), m_success_ret(other.m_success_ret), m_fail_ret(other.m_failed_ret)
+        : m_is_success(other.m_is_success), m_success_ret(other.m_success_ret), m_fail_ret(other.m_fail_ret)
     {
     }
 
@@ -78,6 +78,10 @@ public:
     }
 
 public:
+    static JResult<SuccessRetType, FailureRetType> success()
+    {
+        return JResult<SuccessRetType, FailureRetType>(true, std::make_shared<SuccessRetType>(), nullptr);
+    }
     static JResult<SuccessRetType, FailureRetType> success(SuccessRetType &&success_ret)
     {
         return JResult<SuccessRetType, FailureRetType>(true, std::make_shared<SuccessRetType>(std::move(success_ret)), nullptr);
@@ -85,6 +89,10 @@ public:
     static JResult<SuccessRetType, FailureRetType> success(SuccessRetPtrType success_ret)
     {
         return JResult<SuccessRetType, FailureRetType>(true, success_ret, nullptr);
+    }
+    static JResult<SuccessRetType, FailureRetType> failure()
+    {
+        return JResult<SuccessRetType, FailureRetType>(false, nullptr, std::make_shared<FailureRetType>());
     }
     static JResult<SuccessRetType, FailureRetType> failure(FailureRetType &&failed_ret)
     {
