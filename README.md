@@ -6,5 +6,7 @@
 
 ```CMakeList.txt
 # 假设将JResult放到third_party目录中：
-find_package(JResult REQUIRED PATHS ${CMAKE_SOURCE_DIR}/third_party/JResult)
+add_subdirectory(${CMAKE_SOURCE_DIR}/third_party/JResult)
+add_executable(execute_target ${ALL_SRCS})
+target_link_libraries(execute_target JResult)
 ```
